@@ -30,7 +30,7 @@ function query_process ($x1, $y1, $z1, $x2, $y2, $z2, &$query_list) {
           $point_updated[0] <= $x2 && $point_updated[1] <= $y2 && $point_updated[2] <= $z2 )
         $sum += $query_list[$key];
   }
-  print("sum:" . $sum."\n");
+  print($sum."\n");
 }
 
 
@@ -70,10 +70,9 @@ function main(){
       }
     }
   }
-  //print_r($query_list);
+
 }
 
 main();
-//LIMPIAR ARRAY
 
 ?>
