@@ -1,8 +1,19 @@
 <?php
 
+$query_list = array( );
 
-
-
+function read () {
+  $line = fgets(STDIN);
+  $arr = explode("\n", $line);
+  $arr2 = explode(" ", $arr[0]);
+  return $arr2;
+}
+ 
+function update_process ($x,  $y, $z, $val, &$query_list) {
+	$key = (string)$x . ";" . (string)$y . ";" . (string)$z;
+	print($key);
+	$query_list [$key] = $val;
+}
 
 
 
@@ -12,7 +23,6 @@ function main(){
   $TEST = (int)$in[0];
 
   for ($i = 0; $i < $TEST; $i++) {
-    fulling_matx($matrix);
 
     $in = read();
     $n = (int)$in[0];
@@ -25,7 +35,7 @@ function main(){
         $y = (int)$query[2];
         $z = (int)$query[3];
         $val = (int)$query[4];
-        update_process(); //
+        update_process($x, $y, $z, $val, $query_list); 
 
       }
       else {
@@ -37,13 +47,14 @@ function main(){
         $y2 = (int)$query[5];
         $z2 = (int)$query[6];
 
-        query_process(); //
+        //query_process(); //
       }
     }
   }
-
+  print_r($query_list);
 }
 
 main();
+//LIMPIAR ARRAY
 
 ?>
