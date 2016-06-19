@@ -10,22 +10,27 @@ function read () {
 }
 
 function clear (&$query_list) {
-	$query_list = array();
+  $query_list = array();
 }
 
 function update_process ($x,  $y, $z, $val, &$query_list) {
-	$key = (string)$x . ";" . (string)$y . ";" . (string)$z;
-	print($key);
-	$query_list [$key] = $val;
+  $key = (string)$x . ";" . (string)$y . ";" . (string)$z;
+  $query_list [$key] = $val;
 }
 
-function query_process ( $x1, $y1, $z1, $x2, $y2, $z2, &$query_list) {
-	
-	for($i = 0; $i < 1000; $i++) {
+function query_process ($x1, $y1, $z1, $x2, $y2, $z2, &$query_list) {
 
+  $sum = 0;
 
-	}
+  foreach ($query_list as $key => $value) {
 
+    $point_updated = explode(";", $key); //point updated so it's storaged in $query_list
+
+      if ( $point_updated[0] >= $x1 && $point_updated[1] >= $y1 && $point_updated[2] >= $z1 &&  
+          $point_updated[0] <= $x2 && $point_updated[1] <= $y2 && $point_updated[2] <= $z2 )
+        $sum += $query_list[$key];
+  }
+  print("sum:" . $sum."\n");
 }
 
 
@@ -36,7 +41,7 @@ function main(){
 
   for ($i = 0; $i < $TEST; $i++) {
     
-  	clear($query_list);
+    clear($query_list);
 
     $in = read();
     $n = (int)$in[0];
@@ -65,7 +70,7 @@ function main(){
       }
     }
   }
-  print_r($query_list);
+  //print_r($query_list);
 }
 
 main();
