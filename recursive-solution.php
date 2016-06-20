@@ -34,17 +34,42 @@ function query_process ($x1, $y1, $z1, $x2, $y2, $z2, &$query_list) {
 }
 
 
-function main(){
+function main(){ //validate input limits limits 
+/*  function assert_opt1(){
+     assert_options(ASSERT_ACTIVE,   true);
+    //assert_options (ASSERT_CALLBACK, 'assert_failed');
+    assert_options (ASSERT_BAIL, 1);
+  }
+  function assert1(){
+    assert($TEST >= 1 && $TEST <= 100);
+    assert_options (ASSERT_CALLBACK, 'assert_failed(1)');
+  }
+  function assert_failed($case) {
+          print "You Should to in\n";
+          //print "Assertion failed in $file on line $line: $expr\n";
+  }*/
+  //assert_options(ASSERT_ACTIVE,   true);
+  assert_options (ASSERT_CALLBACK, 'assert_failed');
+  assert_options (ASSERT_BAIL, 1);
+  //assert_options(ASSERT_WARNING,  true);
+  
 
   $in = read();
   $TEST = (int)$in[0];
-
+ 
+  if ( $TEST < 1 || $TEST > 50 ) {
+    print("T is out of range [1,50]");
+    exit(1);
+  }
+  
   for ($i = 0; $i < $TEST; $i++) {
-    
     clear($query_list);
-
     $in = read();
     $n = (int)$in[0];
+    if( $n < 1 || $n > 100 ) {
+        print("N is out of range [1,100]");
+        exit(1);
+    }
     $m = (int)$in[1];
 
     for ($j = 0; $j < $m; $j++) {
@@ -53,11 +78,28 @@ function main(){
         $x = (int)$query[1];
         $y = (int)$query[2];
         $z = (int)$query[3];
-        $val = (int)$query[4];
-        update_process($x, $y, $z, $val, $query_list); 
+        $w = (int)$query[4];
 
+        if ( $x < 1 || $x > $n ) {
+          print("X value is out of range [1,$n]");
+          exit(1);
+        }
+        if ( $y < 1 || $y > $n ) {
+          print("Y value is out of range [1,$n]");
+          exit(1);
+        }
+        if ( $z < 1 || $z > $n ) { 
+          print("Z value is out of range [1,$n]");
+          exit(1);
+        }
+        if ( $w < pow(-10,9) || $w > pow(10,9) ) {
+          print("W value is out of range [-10 pow 9,10 pow 9]");
+          exit(1);
+        }
+
+        update_process($x, $y, $z, $w, $query_list); 
       }
-      else {
+      elseif ($query[0] === "QUERY") {
         $x1 = (int)$query[1];
         $y1 = (int)$query[2];
         $z1 = (int)$query[3];
@@ -66,7 +108,33 @@ function main(){
         $y2 = (int)$query[5];
         $z2 = (int)$query[6];
 
+        if ( $x1 < 1 || $x1 > $n ) { 
+          print("X1 value is out of range [1,$n]");
+          exit(1);
+        }
+        if ( $y1 < 1 || $y1 > $n ) { 
+          print("Y1 value is out of range [1,$n]");
+          exit(1);
+        }
+        if ( $z2 < 1 || $z2 > $n ) { 
+          print("Z2 value is out of range [1,$n]");
+          exit(1);
+        }
+        if ( $x2 < 1 || $x2 > $n ) { 
+          print("X2 value is out of range [1,$n]");
+          exit(1);
+        }
+        if ( $y2 < 1 || $y2 > $n ) { 
+          print("Y2 value is out of range [1,$n]");
+          exit(1);
+        }
+        if ( $z2 < 1 || $z2 > $n ) { 
+          print("Z2 value is out of range [1,$n]");
+          exit(1);
+        }
+
         query_process( $x1, $y1, $z1, $x2, $y2, $z2, $query_list);
+
       }
     }
   }
