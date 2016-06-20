@@ -35,24 +35,6 @@ function query_process ($x1, $y1, $z1, $x2, $y2, $z2, &$query_list) {
 
 
 function main(){ //validate input limits limits 
-/*  function assert_opt1(){
-     assert_options(ASSERT_ACTIVE,   true);
-    //assert_options (ASSERT_CALLBACK, 'assert_failed');
-    assert_options (ASSERT_BAIL, 1);
-  }
-  function assert1(){
-    assert($TEST >= 1 && $TEST <= 100);
-    assert_options (ASSERT_CALLBACK, 'assert_failed(1)');
-  }
-  function assert_failed($case) {
-          print "You Should to in\n";
-          //print "Assertion failed in $file on line $line: $expr\n";
-  }*/
-  //assert_options(ASSERT_ACTIVE,   true);
-  assert_options (ASSERT_CALLBACK, 'assert_failed');
-  assert_options (ASSERT_BAIL, 1);
-  //assert_options(ASSERT_WARNING,  true);
-  
 
   $in = read();
   $TEST = (int)$in[0];
