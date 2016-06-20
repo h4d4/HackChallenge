@@ -48,11 +48,16 @@ function main(){ //validate input limits limits
     clear($query_list);
     $in = read();
     $n = (int)$in[0];
+    $m = (int)$in[1];
+
     if( $n < 1 || $n > 100 ) {
         print("N is out of range [1,100]");
         exit(1);
     }
-    $m = (int)$in[1];
+    if( $m < 1 || $m > 1000 ) {
+        print("M is out of range [1,1000]");
+        exit(1);
+    }
 
     for ($j = 0; $j < $m; $j++) {
       $query = read();
