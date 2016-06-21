@@ -1,182 +1,218 @@
 <?php
 Class testGenerator {
-	//constrains
-	const T = 50; //max testcases
-	const N = 100; //matrix size
-	const M = 1000; //operations's amount
-	
-	// function __construct() {
-	// 	self::main();
-	// }
 
-	function printing ($data) {
-		$file = fopen("testcases.txt","w");
+	function printing ($data,$file_dir) {
+		$file = fopen($file_dir,"w");
 		fwrite($file, $data);
 		fclose($file);
 	}
 
-	function worst_cases ($case,$cube_size) { //generate works cases
-		$N = $cube_size; 
-		$M = self::M;
-		$query = ""; $update = "";
-		$q = 0; $u = 0;
- 
-		if ($case == 1) {
-			$q = 1;
-			$u = $M  - 1;
-		}
-		if ($case == 2) {
-			$q = 500;
-			$u = 500;
-		}
-		if ($case == 3) {
-			$q = $M  - 1;
-			$u = 1;
-		}
-		for ($m = 0; $m < $u; $m++) { 
-			$update = $update . "UPDATE" . " ".rand(1,$N) . " ". rand(1,$N) . " ".rand(1,$N). " ". 
-			rand(pow(-10,9),  pow(10,9)). "\n";
-		}
-		for ($m = 0; $m < $q; $m++) {
-				$query = $query. "QUERY". " ".
-				rand(1,$N) . " ". rand(1,$N) . " ".rand(1,$N). " ".
-				rand(1,$N) . " ". rand(1,$N) . " ".rand(1,$N). "\n";
-		}
-		
-		return $update . $query;
-	}
+	/*  generate operations 
+		$M -> operation amount, $N -> cube size 
+		$w -> array, W range
+		$n -> array, axes ranges,depends of N
+	*/
+	
+	function operation ($M,$n,$w) {
+		$m = abs($M);
+		$op_type = "";
+		$operations = "";
 
-	function operations ($op, $cube_size) { 	//generate operations's amount
-		$N = $cube_size;
-		$op_type = ""; $operations = "";
-
-		for ($m = 0; $m < $op; $m++) { //operations number
-			if ( rand(0, 1) == 0)
+		for ($i = 0; $i < $m; $i++) { //operations number
+			if (rand(0, 1) == 0)
 				$op_type = "UPDATE";
 			else
 				$op_type = "QUERY";
 
 			if ($op_type == "UPDATE") {
-				$operations= $operations . "UPDATE" . " ".rand(1,$N) . " ". rand(1,$N) . " ".rand(1,$N)." ". 
-				rand(pow(-10,9),  pow(10,9)). "\n";
+				$operations= $operations . "UPDATE" . " ".rand($n[0],$n[1]) . " ". rand($n[0],$n[1]) . " ".rand($n[0],$n[1]) . " ". 
+				rand( (int)pow($w[0],$w[1]), (int)pow($w[2],$w[3]) ) . "\n";
 			}
 
 			if ($op_type == "QUERY") {
 				$operations = $operations. "QUERY". " ".
-				rand(1,$N) . " ". rand(1,$N) . " ".rand(1,$N). " ".
-				rand(1,$N) . " ". rand(1,$N) . " ".rand(1,$N). "\n";
+				rand($n[0],$n[1]) . " ". rand($n[0],$n[1]) . " ".rand($n[0],$n[1]). " ".
+				rand($n[0],$n[1]) . " ". rand($n[0],$n[1]) . " ".rand($n[0],$n[1]). "\n";
 			}
 		}
 
 		return $operations;
+
 	}
+	/* testcase structure 
+	$cs -> testcase type(1,2,3,4,5)
+	operation ($M,$n,$w,)
+	*/
+	function testcase ($cs,$limit,$fdir) { //
+		$testcase = "";
+		$M = 0; $T = 0; $N = 0;
+		$n = array(); //range of N
+		$W = array();
 
-	function testcases () { // generate testcases
-		$test1 = ""; $wc = ""; $testcases = "";
-		$T = self::T; $N = self::N; $M = self::M;
-		$num_op = rand(1,$M);
-		$num_test = rand(1,$T); //Testcases number
-		$cs_test1 = rand(1,$N); //cube size test1
-
-		print("num_test: " . $num_test . "\n");
-		print("cube_size: " . $cs_test1 . "\n");
-
-		$num_test() {
-			
+		if ($cs == 1) { 
+			if ($limit=="low")
+				$T = rand(-100,0);
+			elseif ($limit=="upp")
+				$T = rand(51,100);
+			else {
+				print("Second argument shuld be: low or upp");
+				exit();
+			}
+			$M = 5; 
+			$N = rand(0,100);
+			$n[0] = 1; $n[1] = $N ;
+			$W[0] = -10; $W[1] = 9; $W[2] = 10; $W[3] = 9;
+		}
+		elseif ($cs == 2) {
+			if ($limit=="low")
+				$N = rand(-100,0);
+			elseif ($limit=="upp")
+				$N = rand(101,1000);
+			else {
+				print("Second argument shuld be: low or upp");
+				exit();
+			}
+			$T = 10; 
+			$M =  5;
+			$n[0] = 1; $n[1] = $N ;
+			$W[0] = -10; $W[1] = 9; $W[2] = 10; $W[3] = 9;
+		}
+		elseif ($cs == 3) {
+			if ($limit=="low")
+				$M = rand(-100,0);
+			elseif ($limit=="upp")
+				$M = rand(1001,1500);
+			else {
+				print("Second argument shuld be: low or upp");
+				exit();
+			}
+			$T = 10; 
+			$N = rand(0,100);
+			$n[0] = 1; $n[1] = $N ;
+			$W[0] = -10; $W[1] = 9; $W[2] = 10; $W[3] = 9;
+		}
+		elseif ($cs == 4) {
+			if ($limit=="low") {
+				$W[0] = -10; $W[1] = 13; $W[2] = -10; $W[3] = 11;
+			}
+			elseif ($limit=="upp") {
+				$W[0] = 10; $W[1] = 11; $W[2] = 10; $W[3] = 13;
+			}
+			else {
+				print("Second argument shuld be: low or upp");
+				exit();
+			}
+			$T = 10; 
+			$M = 5;
+			$N = rand(0,100);
+			$n[0] = 1; $n[1] = $N ;
+		}
+		elseif ($cs == 5) {
+			if ($limit=="low") {
+				$n[0] = -100; $n[1] = 0 ;
+			}
+			elseif ($limit=="upp") {
+				$n[0] = 101; $n[1] = 500 ;
+			}
+			else {
+				print("Second argument shuld be: low or upp");
+				exit();
+			}
+			$T = 10; 
+			$M = 5;
+			$N = rand(0,100);
+			$W[0] = -10; $W[1] = 9; $W[2] = 10; $W[3] = 9;
+		}
+		else{
+			print("No input to case option");
+			exit();
 		}
 
-		for($i = 0; $i < 3; $i++)
-			$wc = $wc . $this->worst_cases($i,$cs_test1);
+		$testcase = $testcase . "$T \n";
 
-		$test1 = "3\n".$cs_test1." 1000\n". $this->worst_cases(1,$cs_test1);
-		$test1 = $test1 . $cs_test1." 1000\n". $this->worst_cases(2,$cs_test1);
-		$test1 = $test1 . $cs_test1." 1000\n". $this->worst_cases(3,$cs_test1);
-		$testcases = $test1;
-/*
-		for ($m = 2; $m < $num_op -1; $m++){
-
-			$testcases  = $testcases . operations($num_op,$cube_size);
+		for($i = 0; $i < abs($T); $i++ ){
+			$testcase = $testcase .  "$N " . "$M\n" . $this->operation($M,$n,$W);
 		}
-*/
-		//printing($testcases);
-		return $testcases;
+
+		$this->printing($testcase,$fdir);
 	}
 
-	function prueba ($valor) {
-		print($valor);
-		print("\nTESTINGGGG");
+	function generate_all_cases ($dir) {
+		$filename = ""; $case = "";
+		for ($i = 1; $i < 6; $i++) {
+			if($i == 1)
+				$case = "T";
+			if($i == 2)
+				$case = "N";
+			if($i == 3)
+				$case = "M";
+			if($i == 4)
+				$case = "W";
+			if($i == 5)
+				$case = "XYZ";
+			$filename = $dir . "/" . $case . "-low-limits.txt";
+
+			$this->testcase($i,"low",$filename); 
+		}
+		for ($i = 1; $i < 6; $i++) {
+			if($i == 1)
+				$case = "T";
+			if($i == 2)
+				$case = "N";
+			if($i == 3)
+				$case = "M";
+			if($i == 4)
+				$case = "W";
+			if($i == 5)
+				$case = "XYZ";
+
+			$filename = $dir . "/" . $case . "-upp-limits.txt";
+			$this->testcase($i,"upp",$filename); 
+		}
+		
 	}
 
-	function main () {
-		$testcases = $this->testcases() ;
-		$this->printing( $testcases );
+	function case_by_case ($test,$dir) {
+		$case = "";
+		if($test == 1)
+			$case = "T";
+		if($test == 2)
+			$test = "N";
+		if($test == 3)
+			$case = "M";
+		if($test == 4)
+			$case = "W";
+		if($test == 3)
+			$case = "XYZ";
+			$filename = $dir . "/" . $case . "-low-limits.txt";
+
+		$this->testcase($test,"low",$dir); 
+		$this->testcase($test,"upp",$dir); 
 	}
 
-	// function main () {
-	// 	$val = "ssss";
-	// 	$this->prueba( $val );
-	// }
+	function main($op,$dir,$case) {
+		if ((int)$op == 0 && $case === "") {
+			$this->generate_all_cases($dir);
+		}
+		elseif ((int)$op == 1) {
+			if ((int)$case > 0 && (int)$case < 6) {
+				$this->case_by_case($case,$dir);
+			}
+		}
+	}
 }
+/*
+	main($op,$dir,$case)
+		$op -> 
+			0: generate_all_cases() 
+			1: case_by_case()
+		$dir -> path to write testcases
+		$case ->
+			: "" , vacio; Exam: 
+			: number into 1 and 5, to generate testcase by testcase; Exam: $test ->main(1,"testcases","4");
+	*/
 $test = new testGenerator();
-$test ->main();
+$test ->main(0,"testcases","");
+//$test ->main(1,"testcases","4");
 
-/*
-QUERY x1 y1 z1 X2 Y2 Z2 
-UPDATE X Y Z W
-*/
-
-/*
-function type_operation ( $amount ) { //generatin number opertaion
-
-}
-
-
-
-
-function operation () {
-	if( rand(0, 1) == 0)
-		$op = "UPDATE";
-	else
-		$op = "QUERY";
-
-	return $op;
-}
-
-function do_testcases () {
-
-	$T = 50; $op = 0;
-	$file = fopen("testcases.txt","w");
-
-	fwrite($file, "1"."\n");
-
-	for ($t = 1; $t < $T; $t++) { //Testcases number  //Ensure all  testcases
-		fwrite($file, $t."\n");
-		$N = rand(1,100;
-		$M = rand(1,1000);
-		fwrite($file, $N." ".$M."\n");
-		for ($m = 0; $m < $M; $m++) { //operations number
-			if( rand(0, 1) == 0)
-				$op = "UPDATE";
-			else
-				$op = "QUERY";
-
-			if ($op == "UPDATE") {
-				$x = rand(1,$N);
-				$y = rand(1,$N);
-				$z = rand(1,$N);
-				$W0 = -24.4645364561;
-				$W1 = 24.4645364561;
-				$w = rand($W0, $W1);
-				fwrite($file, $op." ". $x." ".$y." ".$z." ". $w."\n");
-			 }//else () {
-				
-			// }
-
-		}
-	}
-
-	fclose($file);
-}	
-//do_testcases();
-get_points();*/
 ?>

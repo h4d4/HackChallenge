@@ -40,7 +40,7 @@ function main(){ //validate input limits limits
   $TEST = (int)$in[0];
  
   if ( $TEST < 1 || $TEST > 50 ) {
-    print("T is out of range [1,50]");
+    print("T = $TEST is out of range [1,50]\n");
     exit(1);
   }
   
@@ -51,11 +51,11 @@ function main(){ //validate input limits limits
     $m = (int)$in[1];
 
     if( $n < 1 || $n > 100 ) {
-        print("N is out of range [1,100]");
+        print("N = $n is out of range [1,100]\n");
         exit(1);
     }
     if( $m < 1 || $m > 1000 ) {
-        print("M is out of range [1,1000]");
+        print("M = $m is out of range [1,1000]\n");
         exit(1);
     }
 
@@ -68,19 +68,19 @@ function main(){ //validate input limits limits
         $w = (int)$query[4];
 
         if ( $x < 1 || $x > $n ) {
-          print("X value is out of range [1,$n]");
+          print("X = $x value is out of range [1,N] with N = $n\n");
           exit(1);
         }
         if ( $y < 1 || $y > $n ) {
-          print("Y value is out of range [1,$n]");
+          print("Y = $y  is out of range [1,N] with N = $n\n");
           exit(1);
         }
         if ( $z < 1 || $z > $n ) { 
-          print("Z value is out of range [1,$n]");
+          print("Z = $z is out of range [1,N] with N = $n\n");
           exit(1);
         }
         if ( $w < pow(-10,9) || $w > pow(10,9) ) {
-          print("W value is out of range [-10 pow 9,10 pow 9]");
+          print("W = $w value is out of range [-10 pow 9,10 pow 9]\n");
           exit(1);
         }
 
@@ -96,27 +96,27 @@ function main(){ //validate input limits limits
         $z2 = (int)$query[6];
 
         if ( $x1 < 1 || $x1 > $n ) { 
-          print("X1 value is out of range [1,$n]");
+          print("X1 = $x1 value is out of range [1,100]\n");
           exit(1);
         }
         if ( $y1 < 1 || $y1 > $n ) { 
-          print("Y1 value is out of range [1,$n]");
+          print("Y1 value is out of range [1,100]\n");
           exit(1);
         }
         if ( $z2 < 1 || $z2 > $n ) { 
-          print("Z2 value is out of range [1,$n]");
+          print("Z2 value is out of range [1,100]\n");
           exit(1);
         }
         if ( $x2 < 1 || $x2 > $n ) { 
-          print("X2 value is out of range [1,$n]");
+          print("X2 value is out of range [1,100]\n");
           exit(1);
         }
         if ( $y2 < 1 || $y2 > $n ) { 
-          print("Y2 value is out of range [1,$n]");
+          print("Y2 value is out of range [1,100]\n");
           exit(1);
         }
         if ( $z2 < 1 || $z2 > $n ) { 
-          print("Z2 value is out of range [1,$n]");
+          print("Z2 value is out of range [1,100]\n");
           exit(1);
         }
 
