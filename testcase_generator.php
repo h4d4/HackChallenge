@@ -6,13 +6,11 @@ Class testGenerator {
 		fwrite($file, $data);
 		fclose($file);
 	}
-
 	/*  generate operations 
 		$M -> operation amount, $N -> cube size 
 		$w -> array, W range
 		$n -> array, axes ranges,depends of N
 	*/
-	
 	function operation ($M,$n,$w) {
 		$m = abs($M);
 		$op_type = "";
@@ -40,8 +38,8 @@ Class testGenerator {
 
 	}
 	/* testcase structure 
-	$cs -> testcase type(1,2,3,4,5)
-	operation ($M,$n,$w,)
+		$cs -> testcase type(1,2,3,4,5)
+		operation ($M,$n,$w,)
 	*/
 	function testcase ($cs,$limit,$fdir) { //
 		$testcase = "";
@@ -59,7 +57,7 @@ Class testGenerator {
 				exit();
 			}
 			$M = 5; 
-			$N = rand(0,100);
+			$N = rand(1,100);
 			$n[0] = 1; $n[1] = $N ;
 			$W[0] = -10; $W[1] = 9; $W[2] = 10; $W[3] = 9;
 		}
@@ -87,7 +85,7 @@ Class testGenerator {
 				exit();
 			}
 			$T = 10; 
-			$N = rand(0,100);
+			$N = rand(1,100);
 			$n[0] = 1; $n[1] = $N ;
 			$W[0] = -10; $W[1] = 9; $W[2] = 10; $W[3] = 9;
 		}
@@ -104,7 +102,7 @@ Class testGenerator {
 			}
 			$T = 10; 
 			$M = 5;
-			$N = rand(0,100);
+			$N = rand(1,100);
 			$n[0] = 1; $n[1] = $N ;
 		}
 		elseif ($cs == 5) {
@@ -120,7 +118,7 @@ Class testGenerator {
 			}
 			$T = 10; 
 			$M = 5;
-			$N = rand(0,100);
+			$N = rand(1,100);
 			$W[0] = -10; $W[1] = 9; $W[2] = 10; $W[3] = 9;
 		}
 		else{
