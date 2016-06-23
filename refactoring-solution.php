@@ -33,7 +33,8 @@ public function post_confirm () {
 	$service_id = Input::get('service_id');
 	$driver_id  = Input::get('driver_id');
 	$service = Service::find($id);      
-	$driver = Driver::find($driver_id);				
+	$driver = Driver::find($driver_id);
+	$service_user = $service->user->uuid;				
 
 
 	if ($service == NULL) 
@@ -42,7 +43,7 @@ public function post_confirm () {
 	if ($service->status_id == '6') 
 		return Response::json(array('error' => '2'));
 
-	if ($service->driver_id != NULL && $service->status_id != '1') //Si el servicio ya tiene conductor asignado
+	if ($service->driver_id != NULL && $service->status_id != '1') 
 		return Response::json(array('error' => '1'));
 
 	if ($service->user->uuid == '') 
@@ -63,9 +64,9 @@ public function post_confirm () {
 	$push = Push::make();
 
 	if ($service->user->type == '1') {
-			$result = $push->ios($servicio->user->uuid, $pushMessage, 1, 'default', 'open', array('servicioId' => $service->id));
+		$push->ios($service_user, $pushMessage, 1, 'default', 'open', array('servicioId' => $service_id ));
 	}else{
-		$result = $push->android2($servicio->user->uuid, $pushMessage, 1, 'default', 'open', array('servicioId' => $service->id));
+		$push->android2($service_user, $pushMessage, 1, 'default', 'open', array('servicioId' => $service_id ));
 	}
 	return Response::json(array('error' => '0'));
 }
