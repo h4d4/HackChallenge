@@ -9,7 +9,6 @@ public function post_confirm () {
 			return Response::json(array('error' => '2'));
 
 		}
-	
 		if ($servicio->driver_id == NULL && $servicio->status_id == 1) {
 			$servicio = 
 				Service::update( $id, array( 
