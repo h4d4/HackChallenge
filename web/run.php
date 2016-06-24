@@ -44,18 +44,32 @@ Class RunAlgorithm {
 			$name = $name[count($name)-1];
 			$command = "php recursive-solution.php < " . $this->upload_files[$i];
 			$run = shell_exec($command);
-			echo "<pre>Testcase: $name</pre>";
-			echo "<pre>$run</pre>";
+
+			$to_show = 
+			"<!DOCTYPE html>" .
+				"<html>" .
+					"<head>" .
+						"<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css\">" .
+					    "<link rel=\"stylesheet\" href=\"http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css\">" .
+					    "<link href=\"css/sb-admin.css\" rel=\"stylesheet\">" .
+       				"</head>" .
+   					"<body >" .
+						"<div id=\"wrapper\" style=\"height: 1302px;\">" .
+    						"<div id=\"page-wrapper\">" .
+        						"<div>" .
+	        						"<h3>Output for testcase: $name</h3>" .
+	        						"<pre>$run</pre>" .
+	        					"</div>" .
+							"</div>" .
+						"</div>" .
+    				"</body>" .
+        		"</html>";
+
+        	echo $to_show;
+
 		}
 	}
-	function show () {
-		$files = $this->upload_files;
-		print_r($files . "\n");
-		for ($i = 0; $i < $this->nf; $i++ ) {
-			print("file_by_file: \n");
-			print($files[$i]);
-		}
-	}
+	
 	function main () {
 		$this->upload();
 		if ( $this->nf > 0) {
